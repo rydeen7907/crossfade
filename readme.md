@@ -10,7 +10,7 @@ image1.jpg と image2.jpg という名前で、モーフィングしたい2つ�
 画像には顔が含まれている必要があります。
 コードを実行します: このコードをPythonスクリプトとして保存し、実行します。
 
-2. faces1 = face_cascade.detectMultiScale(gray1, 1.1, 4)
+2. faces1 = face_cascade.detectMultiScale(gray1, 1.1, 4):
 detectMultiScale関数のパラメータには、画像のグレースケール版、スケールファクター、最小サイズを指定します。
 ・1.1は、スケールファクター（scale factor）です。スケールファクターは、
 画像をスケールアップまたはスケールダウンするために使用されます。この場合、1.1は、画像を10%スケールアップすることを意味します。
