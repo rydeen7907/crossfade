@@ -18,8 +18,8 @@ import numpy as np
 import os
 
 # 画像を読み込みます (img2 から img1 へ流れる)
-img1 = cv2.imread("suzuki_yuuka.jpg")
-img2 = cv2.imread("ugaki_misato.jpg")
+img1 = cv2.imread(".jpg")
+img2 = cv2.imread(".jpg")
 
 # 画像を同じサイズにリサイズします
 img1 = cv2.resize(img1, (512, 512))
