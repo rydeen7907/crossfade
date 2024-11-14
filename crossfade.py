@@ -19,8 +19,8 @@ import numpy as np
 import os
 
 # 画像を読み込みます (img2 から img1 へ流れる)
-img1 = cv2.imread("suzuki_yuuka.jpg")
-img2 = cv2.imread("ugaki_misato.jpg")
+img1 = cv2.imread(".jpg")
+img2 = cv2.imread(".jpg")
 
 # 画像を同じサイズにリサイズします
 img1 = cv2.resize(img1, (512, 512))
@@ -40,7 +40,7 @@ faces2 = face_cascade.detectMultiScale(gray2, 1.1, 4)
 # 顔が検出されたかどうかを確認します
 if len(faces1) == 0 or len(faces2) == 0:
     print("顔が見つかりませんでした")
-    # 顔検出されなかった場合、イメージファイルのモーフィングを実行
+    # 顔検出されなかった場合、イメージファイルのクロスフェードを実行
     crossed_images = []
     for i in range(0, 61):
         alpha = i / 60 # 60 = fps
@@ -55,7 +55,7 @@ if len(faces1) == 0 or len(faces2) == 0:
         image_path = os.path.join(folder_path, f"crossed_image_{i}.png")
         cv2.imwrite(image_path, crossed_image)
 
-        # モーフィング画像を表示
+        # クロスフェード画像を表示
         cv2.imshow('Crossed Image', crossed_image)
         if cv2.waitKey(100) & 0xFF == 27: # (1000ミリ秒 = 1秒待機)
             break
@@ -73,7 +73,7 @@ else:
     face1 = cv2.resize(face1, (512, 512))
     face2 = cv2.resize(face2, (512, 512))
 
-    # 顔のモーフィングを実行
+    # 顔のクロスフェードを実行
     crossed_images = []
     for i in range(0, 61):
         # アルファ値とベータ値を計算
@@ -91,7 +91,7 @@ else:
         image_path = os.path.join(folder_path, f"crossed_image_{i}.png")
         cv2.imwrite(image_path, crossed_image)
 
-        # モーフィング画像を表示
+        # クロスフェード画像を表示
         cv2.imshow('Crossed Image', crossed_image)
         if cv2.waitKey(100) & 0xFF == 27: # ミリ秒待機( 1000ミリ秒 = 1秒 )
             break
