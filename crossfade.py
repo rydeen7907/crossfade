@@ -1,5 +1,6 @@
 """
 画像が徐々に変わるやつ
+いわゆるクロスフェード
 
 2024.11.11
 Python3.13.0
@@ -9,7 +10,7 @@ Gemini 1.5 flash
 フェードアウトしてフェードインするって感じ…
 
 "haarcascade_frontalface_default.xml"のインストールを忘れずに
-モーフィングはOBSで実行して録画するのがいいかと…
+クロスフェードはOBSで実行して録画するのがいいかと…
 
 """
 
@@ -40,22 +41,22 @@ faces2 = face_cascade.detectMultiScale(gray2, 1.1, 4)
 if len(faces1) == 0 or len(faces2) == 0:
     print("顔が見つかりませんでした")
     # 顔検出されなかった場合、イメージファイルのモーフィングを実行
-    morphed_images = []
+    crossed_images = []
     for i in range(0, 61):
         alpha = i / 60 # 60 = fps
         beta = 1 - alpha
-        morphed_image = cv2.addWeighted(img1, alpha, img2, beta, 0.0)
-        morphed_images.append(morphed_image)
+        crossed_image = cv2.addWeighted(img1, alpha, img2, beta, 0.0)
+        crossed_images.append(crossed_image)
 
         # 画像を保存
-        folder_path = "morphed_images"
+        folder_path = "crossed_images"
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
-        image_path = os.path.join(folder_path, f"morphed_image_{i}.png")
-        cv2.imwrite(image_path, morphed_image)
+        image_path = os.path.join(folder_path, f"crossed_image_{i}.png")
+        cv2.imwrite(image_path, crossed_image)
 
         # モーフィング画像を表示
-        cv2.imshow('Morphed Image', morphed_image)
+        cv2.imshow('Crossed Image', crossed_image)
         if cv2.waitKey(100) & 0xFF == 27: # (1000ミリ秒 = 1秒待機)
             break
 
@@ -73,25 +74,25 @@ else:
     face2 = cv2.resize(face2, (512, 512))
 
     # 顔のモーフィングを実行
-    morphed_images = []
+    crossed_images = []
     for i in range(0, 61):
         # アルファ値とベータ値を計算
         # alpha = i - beta
         alpha = i / 60 # alpha = 1(完全に不透明) 画像の透過度を表す
         # beta = 1 - alpha
         beta = 1 - alpha # beta = 0(完全に暗い) 画像の明度を表す        
-        morphed_image = cv2.addWeighted(face1, alpha, face2, beta, 0.0)
-        morphed_images.append(morphed_image)
+        crossed_image = cv2.addWeighted(face1, alpha, face2, beta, 0.0)
+        crossed_images.append(crossed_image)
 
         # 画像を保存
-        folder_path = "morphed_images"
+        folder_path = "crossed_images"
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
-        image_path = os.path.join(folder_path, f"morphed_image_{i}.png")
-        cv2.imwrite(image_path, morphed_image)
+        image_path = os.path.join(folder_path, f"crossed_image_{i}.png")
+        cv2.imwrite(image_path, crossed_image)
 
         # モーフィング画像を表示
-        cv2.imshow('Morphed Image', morphed_image)
+        cv2.imshow('Crossed Image', crossed_image)
         if cv2.waitKey(100) & 0xFF == 27: # ミリ秒待機( 1000ミリ秒 = 1秒 )
             break
 
