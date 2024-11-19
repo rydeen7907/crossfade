@@ -2,7 +2,7 @@
 画像が徐々に変わるやつ
 いわゆるクロスフェード
 
-2024.11.11 - 11.16
+2024.11.10 - 11.16
 Python3.13.0
 Gemini 1.5 flash
 
@@ -21,8 +21,8 @@ import re
 import os
 
 # 画像を読み込みます (img2 から img1 へ流れる)
-img1 = cv2.imread(" 任意の画像 1 ")
-img2 = cv2.imread(" 任意の画像 2 ")
+img1 = cv2.imread("ugaki_misato.jpg")
+img2 = cv2.imread("suzuki_yuuka.jpg")
 
 # 画像を同じサイズにリサイズします
 img1 = cv2.resize(img1, (512, 512))
@@ -50,7 +50,7 @@ if len(faces1) == 0 or len(faces2) == 0:
         crossed_image = cv2.addWeighted(img1, alpha, img2, beta, 0.0)
         crossed_images.append(crossed_images)
 
-        # 画像を保存
+        # 画像を保存(フォルダパスやファイル名は任意)
         folder_path = "crossed_images"
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
@@ -98,9 +98,9 @@ else:
         if cv2.waitKey(100) & 0xFF == 27: # ミリ秒待機( 1000ミリ秒 = 1秒 )
             break
 
-# 動画を作成 (手動で設定する)
-image_folder = "  " # 画像が格納されているフォルダ
-video_name = "  .mp4" # 作成する動画ファイル名
+# 動画を作成 (任意で設定する)
+image_folder = "crossed_faces" # 画像が格納されているフォルダ
+video_name = "crossed_faces.mp4" # 作成する動画ファイル名
 
 # ファイル名のリストをソートして取得
 images = sorted([img for img in os.listdir(image_folder) if img.endswith(".png")], 
@@ -114,27 +114,6 @@ video = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'XVID'), 12, (width,
 
 for image in images:
     video.write(cv2.imread(os.path.join(image_folder, image)))
-
-cv2.destroyAllWindows()
-video.release()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 cv2.destroyAllWindows()
 video.release()
