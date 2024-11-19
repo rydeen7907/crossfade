@@ -21,8 +21,8 @@ import re
 import os
 
 # 画像を読み込みます (img2 から img1 へ流れる)
-img1 = cv2.imread("rilakkuma.png")
-img2 = cv2.imread("korilakkuma.png")
+img1 = cv2.imread("img_file") 
+img2 = cv2.imread("img_file")
 
 # 画像を同じサイズにリサイズします
 img1 = cv2.resize(img1, (512, 512))
