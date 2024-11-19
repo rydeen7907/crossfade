@@ -21,8 +21,8 @@ import re
 import os
 
 # 画像を読み込みます (img2 から img1 へ流れる)
-img1 = cv2.imread("ugaki_misato.jpg")
-img2 = cv2.imread("suzuki_yuuka.jpg")
+img1 = cv2.imread("rilakkuma.png")
+img2 = cv2.imread("korilakkuma.png")
 
 # 画像を同じサイズにリサイズします
 img1 = cv2.resize(img1, (512, 512))
@@ -61,6 +61,24 @@ if len(faces1) == 0 or len(faces2) == 0:
         cv2.imshow('Crossed images', crossed_image)
         if cv2.waitKey(100) & 0xFF == 27: # (1000ミリ秒 = 1秒待機)
             break
+        
+        # 動画を作成 (任意で設定する)
+        image_folder = "crossed_images" # 画像が格納されているフォルダ
+        video_name = "crossed_images.mp4" # 作成する動画ファイル名
+
+        # ファイル名のリストをソートして取得
+        images = sorted([img for img in os.listdir(image_folder) if img.endswith(".png")], 
+                        key=lambda x: int(re.search(r'\d+', x).group()))
+
+        frame = cv2.imread(os.path.join(image_folder, images[0]))
+        height, width, layers = frame.shape
+
+        # 12fps で動画を作成
+        video = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'XVID'), 12, (width, height)) 
+
+    for image in images:
+        video.write(cv2.imread(os.path.join(image_folder, image)))
+
 
 else:
     # 最初の顔の座標を取得します
@@ -98,22 +116,22 @@ else:
         if cv2.waitKey(100) & 0xFF == 27: # ミリ秒待機( 1000ミリ秒 = 1秒 )
             break
 
-# 動画を作成 (任意で設定する)
-image_folder = "crossed_faces" # 画像が格納されているフォルダ
-video_name = "crossed_faces.mp4" # 作成する動画ファイル名
+        # 動画を作成 (任意で設定する)
+        image_folder = "crossed_faces" # 画像が格納されているフォルダ
+        video_name = "crossed_faces.mp4" # 作成する動画ファイル名
 
-# ファイル名のリストをソートして取得
-images = sorted([img for img in os.listdir(image_folder) if img.endswith(".png")], 
-                key=lambda x: int(re.search(r'\d+', x).group()))
+        # ファイル名のリストをソートして取得
+        images = sorted([img for img in os.listdir(image_folder) if img.endswith(".png")], 
+                        key=lambda x: int(re.search(r'\d+', x).group()))
 
-frame = cv2.imread(os.path.join(image_folder, images[0]))
-height, width, layers = frame.shape
+        frame = cv2.imread(os.path.join(image_folder, images[0]))
+        height, width, layers = frame.shape
 
-# 12fps で動画を作成
-video = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'XVID'), 12, (width, height)) 
+        # 12fps で動画を作成
+        video = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'XVID'), 12, (width, height)) 
 
-for image in images:
-    video.write(cv2.imread(os.path.join(image_folder, image)))
+    for image in images:
+        video.write(cv2.imread(os.path.join(image_folder, image)))
 
 cv2.destroyAllWindows()
 video.release()
